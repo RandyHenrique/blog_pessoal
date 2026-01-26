@@ -1,42 +1,39 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Param,
-  ParseIntPipe,
-  Post,
-  Put,
-} from '@nestjs/common';
-import { UsuarioService } from '../services/usuario.service';
-import { Usuario } from '../entities/usuario.entity';
+/* eslint-disable prettier/prettier */
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import { UsuarioService } from "../services/usuario.service";
+import { Usuario } from "../entities/usuario.entity";
+import { JwtAuthGuard } from "../../auth/guard/jwt-auth.guard";
 
-@Controller('/usuarios')
-export class UsuarioController {
-  constructor(private readonly usuarioService: UsuarioService) {}
 
-  @Get('/all')
-  @HttpCode(HttpStatus.OK)
-  findAll(): Promise<Usuario[]> {
-    return this.usuarioService.findAll();
-  }
+@Controller("/usuarios")
+export class UsuarioController{
 
-  @Get('/:id')
-  @HttpCode(HttpStatus.OK)
-  findById(@Param('id', ParseIntPipe) id: number): Promise<Usuario> {
-    return this.usuarioService.findById(id);
-  }
+    constructor(private readonly usuarioService: UsuarioService){ }
 
-  @Post('/cadastrar')
-  @HttpCode(HttpStatus.CREATED)
-  async create(@Body() usuario: Usuario): Promise<Usuario> {
-    return this.usuarioService.create(usuario);
-  }
+    @UseGuards(JwtAuthGuard)
+    @Get('/all')
+    @HttpCode(HttpStatus.OK)
+    findAll(): Promise<Usuario[]>{
+        return this.usuarioService.findAll();
+    }
 
-  @Put('/atualizar')
-  @HttpCode(HttpStatus.OK)
-  async update(@Body() usuario: Usuario): Promise<Usuario> {
-    return this.usuarioService.update(usuario);
-  }
+    @UseGuards(JwtAuthGuard)
+    @Get('/:id')
+    @HttpCode(HttpStatus.OK)
+    findById(@Param('id', ParseIntPipe) id: number): Promise<Usuario>{
+        return this.usuarioService.findById(id)
+    }
+
+    @Post('/cadastrar')
+    @HttpCode(HttpStatus.CREATED)
+    async create(@Body() usuario: Usuario): Promise<Usuario>{
+        return this.usuarioService.create(usuario)
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Put('/atualizar')
+    @HttpCode(HttpStatus.OK)
+    async update(@Body() usuario: Usuario): Promise<Usuario>{
+        return this.usuarioService.update(usuario)
+    }
 }

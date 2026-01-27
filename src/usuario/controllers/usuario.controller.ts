@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
-
 /* eslint-disable prettier/prettier */
-import { Body, Controller, Get, HttpCode, HttpStatus, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, ParseIntPipe, Post, Put, UseGuards } from "@nestjs/common";
 import { ApiBearerAuth, ApiTags } from "@nestjs/swagger";
 import { JwtAuthGuard } from "../../auth/guard/jwt-auth.guard";
 import { Usuario } from "../entities/usuario.entity";
@@ -43,6 +41,4 @@ export class UsuarioController {
 
 }
 
-function Param(arg0: string, parseInt: (string: string, radix?: number) => number): (target: UsuarioController, propertyKey: "findById", parameterIndex: 0) => void {
-    throw new Error("Function not implemented.");
-}
+

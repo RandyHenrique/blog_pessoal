@@ -1,5 +1,12 @@
-export class UsuarioLogin {
-  public usuario: string;
+/* eslint-disable prettier/prettier */
+import { ApiProperty } from "@nestjs/swagger";
 
+export class UsuarioLogin {
+
+  @ApiProperty()
+  public usuario: string;
+  
+  @ApiProperty()
   public senha: string;
+
 }
